@@ -44,7 +44,7 @@ tqdm==4.66.4
 typer==0.12.3
 typing_extensions==4.12.2
 ujson==5.10.0
-urllib3==1.26.18
+urllib3==1.26.19
 uvicorn==0.18.2
 watchdog==2.2.1
 watchfiles==0.22.0
