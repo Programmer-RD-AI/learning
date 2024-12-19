@@ -1,9 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Form, HTTPException
-from fastapi.responses import HTMLResponse, FileResponse
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
 import os
 from io import BytesIO
 from pydub import AudioSegment

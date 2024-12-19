@@ -1,7 +1,6 @@
 # app/main.py
 
-from fastapi import FastAPI, Request, Depends
-from fastapi.templating import Jinja2Templates
+
 from sqlalchemy.orm import Session
 import models, crud, database, utility, schemas
 from database import engine, SessionLocal

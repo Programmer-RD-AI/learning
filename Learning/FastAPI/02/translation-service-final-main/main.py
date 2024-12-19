@@ -1,8 +1,4 @@
 import logging
-from fastapi import FastAPI, BackgroundTasks, HTTPException, Depends, Request, status
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from schemas import TranslationRequestSchema
