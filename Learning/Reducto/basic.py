@@ -7,7 +7,7 @@ X, y = data.data, data.target
 reducer = Reducer(method="pca", n_components=2)
 X_reduced = reducer.fit_transform(X)
 print("Reduced Data (PCA):", X_reduced)
-
+# 
 reducer = Reducer(method="tsne", n_components=2)
 X_reduced = reducer.fit_transform(X)
 print("Reduced Data (t-SNE):", X_reduced)
