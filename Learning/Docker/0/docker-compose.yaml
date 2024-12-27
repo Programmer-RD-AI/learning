@@ -1,0 +1,13 @@
+version: '1'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+  db:
+    image: "mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "mydatabase"
+    volumes:
+      - db-data:/foo
