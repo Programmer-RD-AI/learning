@@ -44,4 +44,3 @@ try:
     print(response["choices"][0]["message"]["content"])
 except openai.error.OpenAIError as e:
     print(f"Error: {e}")
-
