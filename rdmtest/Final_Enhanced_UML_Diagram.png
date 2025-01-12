@@ -1,0 +1,169 @@
+digraph Enhanced_UML_Class_Diagram {
+	compound=true concentrate=true dpi=300 fontname=Arial nodesep=1.0 pad=0.5 rankdir=TB ranksep=1.2 splines=ortho
+	node [fillcolor=white fontname=Arial fontsize=10 height=0.5 margin="0.3,0.1" shape=record style=filled]
+	edge [fontname=Arial fontsize=8 len=1.5 splines=ortho]
+	subgraph cluster_0 {
+		color="#2C3E50" label="Presentation Layer" style=rounded
+		AppointmentView [label="AppointmentView|
+- scanner: Scanner\l
+- appointmentController: AppointmentController\l
+- patientView: PatientView\l
+- dermatologistView: DermatologistView\l
+- treatmentView: TreatmentView\l
+- timeView: TimeView\l
+- invoiceView: InvoiceView\l
+|
++ showAppointmentMenu(): void\l
++ displayMenu(): void\l
++ getUserChoice(): int\l
++ scheduleAppointment(): void\l
++ viewAllAppointments(): void\l
++ updateAppointment(): void\l
++ cancelAppointment(): void\l
++ completeAppointment(): void\l
++ processInvoicePayment(): void\l
++ searchAppointment(): void\l"]
+		PatientView [label="PatientView|
+|
++ getPatientDetails(): Patient\l"]
+		DermatologistView [label="DermatologistView|
+- scanner: Scanner\l
+- dermatologistService: DermatologistService\l
+|
++ selectDermatologist(): DermatologistModel\l
++ addTimeSlotForDermatologist(): void\l
++ getValidDateFromUser(): LocalDate\l
++ getValidStartTimeFromUser(): LocalTime\l"]
+		TreatmentView [label="TreatmentView|
+|
++ getTreatmentDetails(): Treatment\l"]
+		TimeView [label="TimeView|
+|
++ getTimeDetails(dermatologist: DermatologistModel): Time\l"]
+		InvoiceView [label="InvoiceView|
+|
++ getInvoiceDetails(treatment: Treatment): Invoice\l"]
+	}
+	subgraph cluster_1 {
+		color="#2980B9" label="Service Layer" style=rounded
+		AppointmentService [label="AppointmentService|
+- appointmentRepository: AppointmentRepository\l
+|
++ createAppointment(appointment: Appointment): void\l
++ listAppointments(): List<Appointment>\l
++ updateAppointment(appointment: Appointment): boolean\l
++ cancelAppointment(appointmentId: int): boolean\l
++ completeAppointment(appointmentId: int): boolean\l
++ searchAppointments(criteria: String): List<Appointment>\l"]
+		DermatologistService [label="DermatologistService|
+- dermatologistRepository: DermatologistRepository\l
+|
++ selectDermatologist(): DermatologistModel\l
++ addTimeSlotForDermatologist(dermatologist: DermatologistModel, time: Time): boolean\l
++ getDermatologistAvailability(dermatologistId: int, date: LocalDate): List<Time>\l"]
+		PatientService [label="PatientService|
+- patientRepository: PatientRepository\l
+|
++ getPatientDetails(patientId: int): Patient\l
++ createPatient(patient: Patient): void\l
++ updatePatient(patient: Patient): boolean\l"]
+	}
+	subgraph cluster_2 {
+		color="#27AE60" label="Repository Layer" style=rounded
+		AppointmentRepository [label="AppointmentRepository|
+- appointments: List<Appointment>\l
+|
++ save(appointment: Appointment): void\l
++ findAll(): List<Appointment>\l
++ findById(appointmentId: int): Optional<Appointment>\l
++ delete(appointmentId: int): boolean\l
++ update(appointment: Appointment): boolean\l"]
+		DermatologistRepository [label="DermatologistRepository|
+- dermatologists: List<DermatologistModel>\l
+|
++ save(dermatologist: DermatologistModel): void\l
++ findAll(): List<DermatologistModel>\l
++ findById(id: int): Optional<DermatologistModel>\l
++ addTimeSlot(dermatologist: DermatologistModel, time: Time): boolean\l"]
+		PatientRepository [label="PatientRepository|
+- patients: List<Patient>\l
+|
++ save(patient: Patient): void\l
++ findAll(): List<Patient>\l
++ findById(id: int): Optional<Patient>\l"]
+	}
+	subgraph cluster_3 {
+		color="#8E44AD" label="Domain Layer" style=rounded
+		Appointment [label="Appointment|
+- appointmentId: int\l
+- patient: Patient\l
+- dermatologist: DermatologistModel\l
+- treatment: Treatment\l
+- time: Time\l
+- invoice: Invoice\l
+- status: AppointmentStatus\l
+|
++ setStatus(status: AppointmentStatus): void\l
++ getInvoice(): Invoice\l
++ getId(): int\l"]
+		Patient [label="Patient|
+- patientId: int\l
+- name: String\l
+- age: int\l
+- contactInfo: String\l
+- medicalHistory: String\l
+|
++ getId(): int\l
++ getName(): String\l
++ getAge(): int\l"]
+		DermatologistModel [label="DermatologistModel|
+- dermatologistId: int\l
+- name: String\l
+- specialization: String\l
+- availableTimeSlots: List<Time>\l
+|
++ checkAvailability(time: Time): boolean\l
++ addTimeSlot(time: Time): void\l"]
+		Treatment [label="Treatment|
+- treatmentId: int\l
+- name: String\l
+- description: String\l
+- duration: int\l
+- cost: double\l
+|
++ getCost(): double\l
++ getDuration(): int\l"]
+		Invoice [label="Invoice|
+- invoiceId: int\l
+- totalAmount: double\l
+- amountPaid: double\l
+- status: PaymentStatus\l
+|
++ makePayment(amount: double): void\l
++ isPaid(): boolean\l
++ getBalance(): double\l"]
+		Time [label="Time|
+- date: LocalDate\l
+- startTime: LocalTime\l
+- endTime: LocalTime\l
+|
++ getDate(): LocalDate\l
++ getStartTime(): LocalTime\l
++ getEndTime(): LocalTime\l
++ isAvailable(): boolean\l"]
+	}
+	AppointmentView -> AppointmentService [label=uses arrowhead=vee dir=forward]
+	DermatologistView -> DermatologistService [label=uses arrowhead=vee dir=forward]
+	PatientView -> PatientService [label=uses arrowhead=vee dir=forward]
+	AppointmentService -> AppointmentRepository [label=uses arrowhead=vee dir=forward]
+	DermatologistService -> DermatologistRepository [label=uses arrowhead=vee dir=forward]
+	PatientService -> PatientRepository [label=uses arrowhead=vee dir=forward]
+	Appointment -> Patient [label=contains arrowtail=odiamond dir=both]
+	Appointment -> DermatologistModel [label=contains arrowtail=odiamond dir=both]
+	Appointment -> Treatment [label=contains arrowtail=odiamond dir=both]
+	Appointment -> Time [label=contains arrowtail=odiamond dir=both]
+	Appointment -> Invoice [label=owns arrowtail=diamond dir=both]
+	AppointmentRepository -> Appointment [label=manages dir=forward style=dashed]
+	DermatologistRepository -> DermatologistModel [label=manages dir=forward style=dashed]
+	PatientRepository -> Patient [label=manages dir=forward style=dashed]
+}

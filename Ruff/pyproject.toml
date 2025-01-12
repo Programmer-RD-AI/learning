@@ -1,0 +1,7 @@
+[tool.ruff]
+extend-select=["C4", "TCH", "SIM"] # C4: Comprehensions, SIM: Code Simplification, TCH: Type Checking # the types of errors they check yk?
+ignore=[] # ex: "F04"
+show-fixes=true # better visuals
+target-version="py37" # python version
+
+

@@ -160,20 +160,4 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-/Learning/Apache-Kafka/.history
-/Learning/Global_Interpreter_Lock_GIL/.history
-/Learning/Parallel Execution Mechanisms/.history
-/Learning/Structlog/.history
-/Projects/StructLogConfig/.history
-/Learning/Cython/.history
-/Learning/FastAPI/01/Language Translator/.history
-/Learning/Design_Patterns/.history
-/Learning/FastAPI/02/.history
-/Learning/FastAPI/03/.history
-/Learning/PyDantic/.history
-/Learning/Boto3/.history
-/Learning/.history
-/Learning/Docker/1/.history
-/Learning/InferenceParametersForLLMs/.history
-/Learning/Makefile/.history
-/Learning/Docker/.history
+*.history

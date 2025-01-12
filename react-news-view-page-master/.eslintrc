@@ -1,0 +1,31 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": true }
+    ]
+  },
+  "globals": {
+    "document": true,
+    "React": true,
+    "ReactDOM": true,
+    "PropTypes": true,
+    "shallow": true,
+    "expect": true,
+    "mount": true,
+    "sinon": true
+  },
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "env": {
+    "node": true,
+    "mocha": true
+  }
+}

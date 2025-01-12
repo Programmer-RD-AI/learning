@@ -1,0 +1,140 @@
+digraph Complete_UML_Class_Diagram {
+	rankdir=TB
+	splines=ortho
+	nodesep=0.8
+	ranksep=1.0
+	dpi=300
+	AppointmentView [label="AppointmentView
+- scanner: Scanner
+- appointmentController: AppointmentController
+- patientView: PatientView
+- dermatologistView: DermatologistView
+- treatmentView: TreatmentView
+- timeView: TimeView
+- invoiceView: InvoiceView
++ showAppointmentMenu(): void
++ displayMenu(): void
++ getUserChoice(): int
++ scheduleAppointment(): void
++ viewAllAppointments(): void
++ updateAppointment(): void
++ cancelAppointment(): void
++ completeAppointment(): void
++ processInvoicePayment(): void
++ searchAppointment(): void"]
+	PatientView [label="PatientView
++ getPatientDetails(): Patient"]
+	DermatologistView [label="DermatologistView
+- scanner: Scanner
+- dermatologistService: DermatologistService
++ selectDermatologist(): DermatologistModel
++ addTimeSlotForDermatologist(): void
++ getValidDateFromUser(): LocalDate
++ getValidStartTimeFromUser(): LocalTime"]
+	TreatmentView [label="TreatmentView
++ getTreatmentDetails(): Treatment"]
+	TimeView [label="TimeView
++ getTimeDetails(dermatologist: DermatologistModel): Time"]
+	InvoiceView [label="InvoiceView
++ getInvoiceDetails(treatment: Treatment): Invoice"]
+	AppointmentService [label="AppointmentService
+- appointmentRepository: AppointmentRepository
++ createAppointment(appointment: Appointment): void
++ listAppointments(): List<Appointment>
++ updateAppointment(appointment: Appointment): boolean
++ cancelAppointment(appointmentId: int): boolean
++ completeAppointment(appointmentId: int): boolean
++ searchAppointments(criteria: String): List<Appointment>"]
+	DermatologistService [label="DermatologistService
+- dermatologistRepository: DermatologistRepository
++ selectDermatologist(): DermatologistModel
++ addTimeSlotForDermatologist(dermatologist: DermatologistModel, time: Time): boolean
++ getDermatologistAvailability(dermatologistId: int, date: LocalDate): List<Time>"]
+	PatientService [label="PatientService
+- patientRepository: PatientRepository
++ getPatientDetails(patientId: int): Patient
++ createPatient(patient: Patient): void
++ updatePatient(patient: Patient): boolean"]
+	AppointmentRepository [label="AppointmentRepository
+- appointments: List<Appointment>
++ save(appointment: Appointment): void
++ findAll(): List<Appointment>
++ findById(appointmentId: int): Optional<Appointment>
++ delete(appointmentId: int): boolean
++ update(appointment: Appointment): boolean"]
+	DermatologistRepository [label="DermatologistRepository
+- dermatologists: List<DermatologistModel>
++ save(dermatologist: DermatologistModel): void
++ findAll(): List<DermatologistModel>
++ findById(id: int): Optional<DermatologistModel>
++ addTimeSlot(dermatologist: DermatologistModel, time: Time): boolean"]
+	Appointment [label="Appointment
+- appointmentId: int
+- patient: Patient
+- dermatologist: DermatologistModel
+- treatment: Treatment
+- time: Time
+- invoice: Invoice
+- status: AppointmentStatus
++ setStatus(status: AppointmentStatus): void
++ getInvoice(): Invoice
++ getId(): int"]
+	Patient [label="Patient
+- patientId: int
+- name: String
+- age: int
+- contactInfo: String
+- medicalHistory: String
++ getId(): int
++ getName(): String
++ getAge(): int"]
+	DermatologistModel [label="DermatologistModel
+- dermatologistId: int
+- name: String
+- specialization: String
+- availableTimeSlots: List<Time>
++ checkAvailability(time: Time): boolean
++ addTimeSlot(time: Time): void"]
+	Treatment [label="Treatment
+- treatmentId: int
+- name: String
+- description: String
+- duration: int
+- cost: double
++ getCost(): double
++ getDuration(): int"]
+	Invoice [label="Invoice
+- invoiceId: int
+- totalAmount: double
+- amountPaid: double
+- status: PaymentStatus
++ makePayment(amount: double): void
++ isPaid(): boolean
++ getBalance(): double"]
+	Time [label="Time
+- date: LocalDate
+- startTime: LocalTime
+- endTime: LocalTime
++ getDate(): LocalDate
++ getStartTime(): LocalTime
++ getEndTime(): LocalTime
++ isAvailable(): boolean"]
+	AppointmentView -> AppointmentService [label=uses]
+	AppointmentView -> PatientView [label=uses]
+	AppointmentView -> DermatologistView [label=uses]
+	AppointmentView -> TreatmentView [label=uses]
+	AppointmentView -> TimeView [label=uses]
+	AppointmentView -> InvoiceView [label=uses]
+	AppointmentService -> AppointmentRepository [label=uses]
+	DermatologistService -> DermatologistRepository [label=uses]
+	PatientService -> PatientRepository [label=uses]
+	Appointment -> Patient [label=aggregation]
+	Appointment -> DermatologistModel [label=aggregation]
+	Appointment -> Treatment [label=aggregation]
+	Appointment -> Time [label=aggregation]
+	Appointment -> Invoice [label=composition]
+	DermatologistModel -> Time [label=aggregation]
+	AppointmentRepository -> Appointment [label=manages]
+	DermatologistRepository -> DermatologistModel [label=manages]
+	PatientRepository -> Patient [label=manages]
+}

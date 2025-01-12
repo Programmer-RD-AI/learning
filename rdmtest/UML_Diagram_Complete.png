@@ -1,0 +1,38 @@
+digraph UML_Class_Diagram {
+	rankdir=LR size="8,5"
+	AppointmentView [label="AppointmentView|\lscanner: Scanner\lappointmentController: AppointmentController\lpatientView: PatientView\ldermatologistView: DermatologistView\ltreatmentView: TreatmentView\ltimeView: TimeView\linvoiceView: InvoiceView\l|showAppointmentMenu(): void\ldisplayMenu(): void\lgetUserChoice(): int\lscheduleAppointment(): void\lviewAllAppointments(): void\lupdateAppointment(): void\lcancelAppointment(): void\lcompleteAppointment(): void\lprocessInvoicePayment(): void\lsearchAppointment(): void\l"]
+	AppointmentController [label="AppointmentController|\l\l|createAppointment(patient, dermatologist, treatment, time, invoice): Appointment\llistAppointments(): List<Appointment>\lgetAppointmentById(appointmentId: int): Appointment\lupdateAppointment(appointmentId: int, patient, dermatologist, treatment, time): bool\lcancelAppointmentById(appointmentId: int): bool\l"]
+	PatientView [label="PatientView|\l\l|getPatientDetails(): Patient\l"]
+	DermatologistView [label="DermatologistView|\lscanner: Scanner\ldermatologistRepository: DermatologistRepository\l|selectDermatologist(): DermatologistModel\laddTimeSlotForDermatologist(): void\lgetValidDateFromUser(): LocalDate\lgetValidStartTimeFromUser(): LocalTime\lgetValidInputFromUser(prompt, parser): <T>\l"]
+	TreatmentView [label="TreatmentView|\l\l|getTreatmentDetails(): Treatment\l"]
+	TimeView [label="TimeView|\l\l|getTimeDetails(dermatologist): Time\l"]
+	InvoiceView [label="InvoiceView|\l\l|getInvoiceDetails(treatment): Invoice\l"]
+	Appointment [label="Appointment|\lappointmentId: int\lpatient: Patient\ldermatologist: DermatologistModel\ltreatment: Treatment\ltime: Time\linvoice: Invoice\lstatus: String\l|\l"]
+	Patient [label="Patient|\lpatientId: int\lname: String\lage: int\lgender: String\l|\l"]
+	DermatologistModel [label="DermatologistModel|\ldermatologistId: int\lname: String\lspecialization: String\l|checkAvailability(time: Time): bool\l"]
+	Treatment [label="Treatment|\ltreatmentId: int\lname: String\ldescription: String\lcost: double\l|\l"]
+	Time [label="Time|\ldate: LocalDate\lstartTime: LocalTime\lendTime: LocalTime\l|\l"]
+	Invoice [label="Invoice|\linvoiceId: int\ltotalAmount: double\lamountPaid: double\lisPaid: bool\l|makePayment(amount: double): void\lisPaid(): bool\l"]
+	Dermatologist [label="Dermatologist|\lname: String\l|\l"]
+	TimeImpl [label="TimeImpl|\ldate: LocalDate\lstartTime: LocalTime\lendTime: LocalTime\l|getEndTime(): LocalTime\l"]
+	DermatologistRepository [label="DermatologistRepository|\l\l|addTimeSlot(dermatologist: DermatologistModel, time: Time): bool\l"]
+	AppointmentView -> AppointmentController
+	AppointmentView -> PatientView
+	AppointmentView -> DermatologistView
+	AppointmentView -> TreatmentView
+	AppointmentView -> TimeView
+	AppointmentView -> InvoiceView
+	Appointment -> Patient [arrowhead=odiamond]
+	Appointment -> DermatologistModel [arrowhead=odiamond]
+	Appointment -> Treatment [arrowhead=odiamond]
+	Appointment -> Time [arrowhead=odiamond]
+	Appointment -> Invoice [arrowhead=odiamond]
+	DermatologistModel -> Dermatologist [arrowhead=diamond]
+	DermatologistView -> DermatologistRepository
+	DermatologistRepository -> DermatologistModel [arrowhead=odiamond]
+	TimeImpl -> Time
+	fontsize=20 label="Complete UML Class Diagram for Appointment Management System"
+	labelloc=t
+	dpi=300
+	rankdir=LR size="12,8"
+}

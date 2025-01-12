@@ -1,0 +1,27 @@
+[
+  {
+    "student_id": 1,
+    "student_name": "Jack",
+    "student_major": "Biology"
+  },
+  {
+    "student_id": 2,
+    "student_name": "Kate",
+    "student_major": "Sociolody"
+  },
+  {
+    "student_id": 3,
+    "student_name": "Claire",
+    "student_major": null
+  },
+  {
+    "student_id": 4,
+    "student_name": "Jack",
+    "student_major": "Biology"
+  },
+  {
+    "student_id": 5,
+    "student_name": "Mike",
+    "student_major": "Computer Science"
+  }
+]

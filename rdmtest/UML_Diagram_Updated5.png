@@ -1,0 +1,97 @@
+digraph Complete_UML_Class_Diagram {
+	Appointment [label="Appointment
+- appointmentId: int
+- patient: Patient
+- dermatologist: DermatologistModel
+- treatment: Treatment
+- time: Time
+- invoice: Invoice
+- status: String
++ setStatus(status: String): void
++ getInvoice(): Invoice
++ getAppointmentId(): int
+"]
+	Patient [label="Patient
+- patientId: int
+- name: String
+- age: int
+- address: String
+- contactInfo: String
++ getPatientDetails(): Patient
+"]
+	DermatologistModel [label="DermatologistModel
+- name: String
++ checkAvailability(time: Time): boolean
+"]
+	Treatment [label="Treatment
+- treatmentId: int
+- treatmentName: String
+- cost: double
++ getTreatmentDetails(): Treatment
+"]
+	Invoice [label="Invoice
+- invoiceId: int
+- totalAmount: double
+- amountPaid: double
++ makePayment(amount: double): void
++ isPaid(): boolean
+"]
+	Time [label="Time
+- date: LocalDate
+- startTime: LocalTime
++ getEndTime(): LocalTime
+"]
+	DermatologistRepository [label="DermatologistRepository
+- dermatologists: List<DermatologistModel>
++ addTimeSlot(dermatologist: DermatologistModel, time: Time): boolean
+"]
+	AppointmentRepository [label="AppointmentRepository
+- appointments: List<Appointment>
++ createAppointment(appointment: Appointment): void
++ listAppointments(): List<Appointment>
++ getAppointmentById(appointmentId: int): Appointment
++ cancelAppointmentById(appointmentId: int): boolean
++ updateAppointment(appointmentId: int, patient: Patient, dermatologist: DermatologistModel, treatment: Treatment, time: Time): boolean
++ getAppointmentsByPatientName(patientName: String): List<Appointment>
+"]
+	AppointmentService [label="AppointmentService
++ scheduleAppointment(): void
++ viewAllAppointments(): void
++ updateAppointment(): void
++ cancelAppointment(): void
++ completeAppointment(): void
++ searchAppointment(): void
+"]
+	DermatologistService [label="DermatologistService
++ selectDermatologist(): DermatologistModel
++ addTimeSlotForDermatologist(): void
+"]
+	TimeService [label="TimeService
++ getTimeDetails(dermatologist: DermatologistModel): Time
+"]
+	TreatmentService [label="TreatmentService
++ getTreatmentDetails(): Treatment
+"]
+	PatientService [label="PatientService
++ getPatientDetails(): Patient
+"]
+	Appointment -> Patient [label=aggregation arrowhead=odiamond]
+	Appointment -> DermatologistModel [label=aggregation arrowhead=odiamond]
+	Appointment -> Treatment [label=aggregation arrowhead=odiamond]
+	Appointment -> Time [label=aggregation arrowhead=odiamond]
+	Appointment -> Invoice [label=aggregation arrowhead=odiamond]
+	DermatologistModel -> DermatologistRepository [label=aggregation arrowhead=odiamond]
+	AppointmentRepository -> Appointment [label=manages arrowhead=normal style=dashed]
+	DermatologistRepository -> DermatologistModel [label=manages arrowhead=normal style=dashed]
+	DermatologistRepository -> Time [label=manages arrowhead=normal style=dashed]
+	AppointmentService -> AppointmentRepository [label=uses]
+	AppointmentService -> PatientService [label=uses]
+	AppointmentService -> DermatologistService [label=uses]
+	AppointmentService -> TreatmentService [label=uses]
+	AppointmentService -> TimeService [label=uses]
+	DermatologistService -> DermatologistRepository [label=uses]
+	DermatologistService -> TimeService [label=uses]
+	TreatmentService -> Treatment [label=uses]
+	PatientService -> Patient [label=uses]
+	TimeService -> Time [label=uses]
+}

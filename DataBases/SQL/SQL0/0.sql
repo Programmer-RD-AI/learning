@@ -1,0 +1,142 @@
+-- SELECT
+--     1 + 1 AS Result,
+--     3 + 3 AS Result2,
+--     4 * 4 AS [Result 3] 
+-- FROM sys.objects
+-- SELECT
+--     [name],[object_id],[type_desc]
+-- FROM
+--     sys.objects
+-- SELECT
+--     [name] AS NameOfObject,[object_id],[type_desc]
+-- FROM
+--     sys.objects
+-- SELECT
+--     11 * 12 AS [My Answer]
+-- SELECT
+--     [object_id] AS ObjectID,
+--     [name] AS ObjectName,
+--     [column_id] AS ColumnID
+-- FROM
+--     sys.columns
+-- SELECT
+--     *
+-- FROM
+--     sys.objects
+-- WHERE
+--     object_id >= 4
+--     AND object_id <= 10
+-- SELECT
+--     *
+-- FROM
+--     sys.objects
+-- WHERE
+--     [name] LIKE 'sysr%'
+-- SELECT
+--     *
+-- FROM
+--     sys.objects
+-- WHERE
+--     [name] NOT LIKE 'sysr%'
+-- SELECT
+--     *
+-- FROM
+--     sys.objects
+-- WHERE
+--     [name] LIKE '%A%'
+-- SELECT
+--     *
+-- FROM
+--     sys.objects
+-- WHERE
+--     create_date < '2019-01-01' -- >
+-- <
+-- =
+-- <>
+-- >=
+-- <=
+-- AND
+-- OR
+-- NOT
+-- 'string'
+-- LIKE
+-- '&'
+-- '2019-01-01'
+-- SELECT schema_id,count(schema_id) as NumbeofRows from sys.objects GROUP BY schema_id
+-- SELECT principal_id, count(*) as NumofRows from sys.objects GROUP BY principal_id
+-- SELECT
+-- TOP 10 schema_id
+-- FROM
+-- sys.objects
+-- SELECT
+--     object_id AS ObjectID,
+--     name as ObjectName,
+--     column_id AS ColumnID
+-- FROM
+--     sys.columns
+-- WHERE
+--     column_id = 1
+-- SELECT
+--     TOP 10 object_id AS ObjectID,
+--     name as ObjectName,
+--     column_id AS ColumnID
+-- FROM
+--     sys.columns
+-- WHERE
+--     column_id <= 10
+--     AND column_id >= 1
+-- SELECT
+--     object_id AS ObjectID,
+--     name as ObjectName,
+--     column_id AS ColumnID
+-- FROM
+--     sys.columns
+-- WHERE
+--     [name] LIKE 'n%'
+-- SELECT
+--     object_id,
+--     count(object_id) AS ValueCount
+-- FROM
+--     sys.columns
+-- GROUP BY
+--     object_id
+-- SELECT
+--     name,
+--     count(*) as NumberofRows
+-- FROM
+--     sys.objects
+-- WHERE name LIKE 'f%'
+-- GROUP BY
+--     name 
+-- HAVING COUNT(*) > 0
+-- SELECT
+--     name
+-- FROM
+--     sys.objects
+-- ORDER BY name ASC
+-- SELECT
+--     name
+-- FROM
+--     sys.objects
+-- ORDER BY name DESC
+-- SELECT
+--     object_id AS ObjectID,
+--     COUNT(*) as NumberOfRows
+-- FROM
+--     sys.columns
+-- GROUP BY
+--     object_id
+-- HAVING
+--     COUNT(*) <= 10
+
+-- SELECT
+--     object_id AS ObjectID,
+--     COUNT(*) as NumberOfRows
+-- FROM
+--     sys.columns
+-- GROUP BY
+--     object_id
+-- HAVING
+--     COUNT(*) <= 10
+-- ORDER BY
+--     NumberOfRows DESC, ObjectID ASC
