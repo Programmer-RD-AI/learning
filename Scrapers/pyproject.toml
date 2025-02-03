@@ -17,5 +17,5 @@ dependencies = [
     "scrapegraphai>=1.37.1",
     "scrapling>=0.2.93",
     "v>=1",
-    "websockets==8.1",
+    "websockets==9.1",
 ]
