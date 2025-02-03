@@ -7,9 +7,15 @@ requires-python = ">=3.10"
 dependencies = [
     "autoscraper>=1.1.14",
     "markdownify>=0.14.1",
+    "pdfminer-six>=20240706",
+    "pikepdf>=9.5.1",
+    "playwright>=1.49.1",
+    "pymupdf>=1.25.2",
+    "pyppeteer>=0.0.25",
     "recipe-scrapers>=15.4.0",
     "scrapegraph-py>=1.10.2",
     "scrapegraphai>=1.37.1",
     "scrapling>=0.2.93",
     "v>=1",
+    "websockets==8.1",
 ]
