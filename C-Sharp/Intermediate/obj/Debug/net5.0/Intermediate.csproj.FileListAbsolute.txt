@@ -1,0 +1,16 @@
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.csproj.AssemblyReference.cache
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.GeneratedMSBuildEditorConfig.editorconfig
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.AssemblyInfoInputs.cache
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.AssemblyInfo.cs
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.csproj.CoreCompileInputs.cache
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/bin/Debug/net5.0/Intermediate
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/bin/Debug/net5.0/Intermediate.deps.json
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/bin/Debug/net5.0/Intermediate.runtimeconfig.json
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/bin/Debug/net5.0/Intermediate.runtimeconfig.dev.json
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/bin/Debug/net5.0/Intermediate.dll
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/bin/Debug/net5.0/ref/Intermediate.dll
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/bin/Debug/net5.0/Intermediate.pdb
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.dll
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/ref/Intermediate.dll
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.pdb
+/media/indika/Sync/Programmer-RD-AI/Programming/Learning/C-Sharp/Intermediate/obj/Debug/net5.0/Intermediate.genruntimeconfig.cache

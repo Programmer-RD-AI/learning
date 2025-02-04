@@ -1,0 +1,23 @@
+def server_current_marks(client_1_marks, client_2_marks):
+    if client_1_marks > client_2_marks:
+        connection.send(" > You are ahead of the server... \n > Keep up the good gaming....".encode("utf-8"))
+        connection_2.send(" > Come on you can do this a little bit more win....".encode("utf-8"))
+        connection_2.send(f" > Your Opponents Marks : {client_1_marks} ".encode("utf-"))
+        connection.send(f" > Your Opponents Marks : {client_2_marks} ".encode("utf-"))
+        connection.send(f" > Your Marks : {client_1_marks} ".encode("utf-8"))
+        connection_2.send(f" > Your Marks : {client_2_marks} ".encode("utf-8"))
+    elif client_marks < server_marks:
+        connection_2.send(" > You are ahead of the server... \n > Keep up the good gaming....".encode("utf-8"))
+        connection.send(" > Come on you can do this a little bit more win....".encode("utf-8"))
+        connection_2.send(f" > Your Opponents Marks : {client_1_marks} ".encode("utf-"))
+        connection.send(f" > Your Opponents Marks : {client_2_marks} ".encode("utf-"))
+        connection.send(f" > Your Marks : {client_1_marks} ".encode("utf-8"))
+        connection_2.send(f" > Your Marks : {client_2_marks} ".encode("utf-8"))
+    elif client_marks == server_marks:
+        connection.send(" > You and the server is tied....".encode("utf-8"))
+        connection_2.send(" > You and the server is tied....".encode("utf-8"))
+        connection_2.send(f" > Your Opponents Marks : {client_1_marks} ".encode("utf-"))
+        connection.send(f" > Your Opponents Marks : {client_2_marks} ".encode("utf-"))
+        connection.send(f" > Your Marks : {client_1_marks} ".encode("utf-8"))
+        connection_2.send(f" > Your Marks : {client_2_marks} ".encode("utf-8"))
+

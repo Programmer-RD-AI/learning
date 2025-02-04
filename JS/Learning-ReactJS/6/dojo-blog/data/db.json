@@ -1,0 +1,16 @@
+{
+  "blogs": [
+    {
+      "title": "Welcome",
+      "body": "Welcome I am currently learning react native it is 10:27 PM Nov 8 2021 :) Its cold :)\n",
+      "author": "yoshi",
+      "id": 1
+    },
+    {
+      "title": "Its a me mario",
+      "body": "Its a me mario",
+      "author": "mario",
+      "id": 2
+    }
+  ]
+}

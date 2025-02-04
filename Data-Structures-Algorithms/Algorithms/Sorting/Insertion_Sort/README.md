@@ -1,0 +1,3 @@
+Not the most efficent, but there are cases where it is extremly fast.
+Useful for times when we know the list is pretty much sorted kinda...
+In a best case cenario we can get O(n) time complexity

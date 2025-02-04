@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Blog-Learning-React-Native",
+    "slug": "Blog-Learning-React-Native",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./app/assets/icon.png",
+    "splash": {
+      "image": "./app/assets/Loading@2x.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff",
+      "time": 100000000000000
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./app/assets/favicon.png"
+    }
+  }
+}

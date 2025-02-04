@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "/home/indika/.dotnet/store/|arch|/|tfm|",
+      "/home/indika/.nuget/packages"
+    ]
+  }
+}
