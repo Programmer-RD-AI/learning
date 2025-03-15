@@ -53,15 +53,12 @@ class LatestAiDevelopment():
     @crew
     def crew(self) -> Crew:
         """Creates the LatestAiDevelopment crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
-        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
-
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
+            agents=self.agents,
+            tasks=self.tasks,
             process=Process.sequential,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+            # manager_llm="ollama/llama3.2" # Use the larger model without the 1b suffix
         )
     
     @after_kickoff
