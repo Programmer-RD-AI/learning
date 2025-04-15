@@ -14,7 +14,6 @@ public class StudentConfig {
         return args -> {
             Student test = new Student(
                     "Test",
-                    21,
                     LocalDate.of(2000, Month.JANUARY,12),
                     "Test@gmail.com"
             );
