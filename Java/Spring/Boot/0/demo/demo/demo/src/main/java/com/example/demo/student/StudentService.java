@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,21 @@ public class StudentService {
             return;
         }
         throw new IllegalStateException("Student with id " + studentId + " does not exist");
+    }
+
+    @Transactional
+    public void updateStudent(Long studentId, String name, String email) {
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Student with id " + studentId + " does not exist"));
+        if (name != null && !student.getName().equals(name)){
+            student.setName(name);
+        }
+        if (email != null && !student.getEmail().equals(email)){
+            Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+            if (studentOptional.isPresent()){
+                throw new IllegalStateException("Student with email " + email + " already exists");
+            }
+            student.setEmail(email);
+        }
+        studentRepository.save(student);
     }
 }
