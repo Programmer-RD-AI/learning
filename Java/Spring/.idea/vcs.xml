@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/java-functional-programming" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/java-streams-youtube" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jdbc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/microservices" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/spring-boot-crash-course" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/spring-boot-essentials" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/spring-boot-master-class-course" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/spring-data-jpa-course" vcs="Git" />
+  </component>
+</project>
