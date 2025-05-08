@@ -21,7 +21,7 @@ fn main() {
     let weight = 70.0;
     let height = 1.82;
     let bmi = calculate_bmi(weight, height);
-    println!("Your BMI is: {}", bmi);
+    println!("Your BMI is: {:.2}", bmi);
 }
 
 // Hoisiting - can call function anywhere in your code
