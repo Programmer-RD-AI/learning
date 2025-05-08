@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[3]:
+
+
 import numpy as np
 from tqdm import *
 import re
@@ -9,7 +15,7 @@ import torchvision.transforms as transforms
 from torchvision.models import *
 from torchvision.utils import save_image
 
-device = "cpu"
+device = "cuda"
 image_size = 356
 loader = transforms.Compose(
     [
@@ -31,16 +37,23 @@ class VGG(Module):
             X = layer(X)
             if str(layer_num) in self.chosen_features:
                 features.append(X)
+        print(torch.from_numpy(np.array(features)).shape)
         return features
 
 
 def load_image(image_name):
     image = Image.open(image_name)
     image = loader(image)
-    # print(image.shape)
+    print(image.shape)
     image = image.unsqueeze(0)
-    # print(image.shape)
+    print(image.shape)
     return image.to(device)
+
+
+
+
+
+# In[4]:
 
 
 original_img = load_image("annahathaway.png")
@@ -57,31 +70,28 @@ beta = 0.01
 optimizer = Adam([generated], lr=learning_rate)
 
 
+# In[5]:
+
+
 for step in tqdm(range(total_steps)):
     generated_features = model(generated)
-    # print(np.array(generated_features[1].detach().numpy()).shape)
     original_img_features = model(original_img)
-    # print(np.array(original_img_features[2].detach().numpy()).shape)
     style_features = model(style_img)
-    # print(np.array(style_features[3].detach().numpy()).shape)
     style_loss = original_loss = 0
     for gen_feature, original_feature, style_feature in zip(
         generated_features, original_img_features, style_features
     ):
         batch_size, channel, height, width = gen_feature.shape
-        print(np.array(gen_feature.detach().numpy()).shape)
-        print(np.array(original_feature.detach().numpy()).shape)
-        print(np.array(style_feature.detach().numpy()).shape)
         original_loss += torch.mean((gen_feature - original_feature) ** 2)
         # Compute gram matrix
         G = gen_feature.view(channel, height * width).mm(
             gen_feature.view(channel, height * width).t()
         )
-        print(G.shape)
+        # print(G.shape
         A = style_feature.view(channel, height * width).mm(
             style_feature.view(channel, height * width).t()
         )
-        print(A.shape)
+        # print(A.shape)
         style_loss += torch.mean((G - A) ** 2)
     total_loss = alpha * original_loss + beta * style_loss
     optimizer.zero_grad()
@@ -89,3 +99,10 @@ for step in tqdm(range(total_steps)):
     optimizer.step()
     save_image(generated, "generated.png")
     break
+
+
+# In[ ]:
+
+
+
+

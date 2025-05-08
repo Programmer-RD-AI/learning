@@ -172,3 +172,8 @@ cython_debug/
 /JS/Blog-Learning-React-Native/.expo
 Python/Gemini/MultiModal/video.raw
 Python/Gemini/MultiModal/audio.raw
+
+# Jupyter notebooks and archives
+archive/
+*.ipynb
+.virtual_documents/
