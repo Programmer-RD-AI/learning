@@ -1,0 +1,188 @@
+version: "3"
+
+env:
+  CLUSTER_NAME: devops-directive-kubernetes-course
+  CIVO_REGION: NYC1
+  GCP_REGION: us-central1
+  GCP_ZONE: us-central1-a
+  # Set default gum style options
+  BORDER: double
+  BORDER_FOREGROUND: "212"
+  PADDING: "1 1"
+  MARGIN: "1 1"
+
+tasks:
+  civo:00-authenticate-cli:
+    cmds:
+      - cmd: |
+          gum style "$(cat <<EOF
+          To get an API key you need to:
+          ---
+          1. Log in or create an account at https://dashboard.civo.com/
+          2. Create a team at https://dashboard.civo.com/teams
+          3. Add yourself to the team
+          4. Navigate to https://dashboard.civo.com/security to get the api key
+
+          🚨🚨🚨 NOTE: Sometimes account verification required for new accounts 
+          (so sign up before you want to use it!) 🚨🚨🚨
+          EOF
+          )"
+        silent: true
+      - civo apikey save
+      - civo apikey ls
+      - cmd: gum style "run \`civo apikey current <KEY_NAME>\` to set the current key as the default (if it is not already)"
+        silent: true
+    desc: Authenticate the Civo CLI
+
+  civo:01-create-network:
+    cmds:
+      - civo network create ${CLUSTER_NAME} --region ${CIVO_REGION}
+    desc: Create a Civo network
+
+  civo:02-create-firewall:
+    cmds:
+      - |
+        civo firewall create ${CLUSTER_NAME} \
+        --network ${CLUSTER_NAME} \
+        --create-rules false \
+        --region ${CIVO_REGION}
+      - |
+        ingress_rule_ids=$(civo firewall rule ls --region ${CIVO_REGION} ${CLUSTER_NAME} -o json | jq -r '.[] | select(.direction == "ingress") | .id')
+        for rule_id in $ingress_rule_ids; do
+          civo firewall rule remove ${CLUSTER_NAME} $rule_id -y --region ${CIVO_REGION}
+        done
+      - civo firewall rule create ${CLUSTER_NAME} --startport 80 --endport 80 --cidr 0.0.0.0/0 --protocol TCP --region ${CIVO_REGION}
+      - civo firewall rule create ${CLUSTER_NAME} --startport 443 --endport 443 --cidr 0.0.0.0/0 --protocol TCP --region ${CIVO_REGION}
+      - civo firewall rule create ${CLUSTER_NAME} --startport 6443 --endport 6443 --cidr 0.0.0.0/0 --protocol TCP --region ${CIVO_REGION}
+      - cmd: gum style "🚨 If you wanted to lock down access to the k8s api, you could instead only allow traffic on 6443 from your IP (or that of a bastion host)"
+        silent: true
+    desc: Create a Civo firewall and set up rules
+
+  civo:03-create-cluster:
+    cmds:
+      - |
+        civo kubernetes create ${CLUSTER_NAME} \
+          --region ${CIVO_REGION} \
+          --network ${CLUSTER_NAME} \
+          --existing-firewall ${CLUSTER_NAME} \
+          --nodes 2 \
+          --size g4s.kube.medium \
+          --remove-applications "traefik2-nodeport" \
+          --wait
+    desc: Create a Civo Kubernetes cluster
+
+  civo:04-create-all:
+    cmds:
+      - task: civo:01-create-network
+      - task: civo:02-create-firewall
+      - task: civo:03-create-cluster
+    desc: Create the Civo network, firewall, and cluster in sequence
+
+  civo:05-get-kubeconfig:
+    cmds:
+      - civo kubernetes config ${CLUSTER_NAME} --region ${CIVO_REGION} --save --switch
+    desc: Get kubeconfig for the cluster
+
+  civo:06-clean-up:
+    cmds:
+      - civo kubernetes delete ${CLUSTER_NAME} --region ${CIVO_REGION} -y
+      - cmd: gum style "There is some delay on the civo side from cluster being deleted to it being removed from the firewall rule usage"
+        silent: true
+      - sleep 10
+      - civo firewall delete ${CLUSTER_NAME} --region ${CIVO_REGION} -y
+      - civo network delete ${CLUSTER_NAME} --region ${CIVO_REGION} -y
+    desc: Clean up the Civo Kubernetes cluster and associated resources
+
+  gcp:01-init-cli:
+    cmds:
+      - gcloud init
+    desc: "Authenticate and configure the gcloud CLI"
+
+  gcp:02-enable-apis:
+    cmds:
+      - |
+        gcloud services enable \
+          compute.googleapis.com \
+          container.googleapis.com \
+          cloudresourcemanager.googleapis.com \
+          iam.googleapis.com \
+          secretmanager.googleapis.com \
+          servicemanagement.googleapis.com \
+          serviceusage.googleapis.com
+    desc: "Enable necessary APIs"
+
+  gcp:03-set-region-and-zone:
+    cmds:
+      - gcloud config set compute/region ${GCP_REGION}
+      - gcloud config set compute/zone ${GCP_ZONE}
+    desc: "Set default region and zone"
+
+  gcp:04-create-vpc:
+    cmds:
+      - gcloud compute networks create ${CLUSTER_NAME} --subnet-mode=custom
+    desc: "Create VPC"
+
+  gcp:05-create-subnet:
+    cmds:
+      - |
+        gcloud compute networks subnets create subnet-1 \
+          --network=${CLUSTER_NAME} \
+          --region=${GCP_REGION} \
+          --range=10.0.0.0/20
+    desc: "Create subnet"
+
+  gcp:06-create-cluster:
+    desc: "Create GKE cluster"
+    vars:
+      GCP_PROJECT_ID: kubernetes-course-424917
+    cmds:
+      - |
+        gcloud container clusters create ${CLUSTER_NAME} \
+          --zone ${GCP_ZONE} \
+          --network ${CLUSTER_NAME} \
+          --subnetwork subnet-1 \
+          --machine-type e2-standard-2 \
+          --num-nodes 2 \
+          --gateway-api=standard \
+          --workload-pool={{.GCP_PROJECT_ID}}.svc.id.goog
+
+  gcp:07-create-all:
+    cmds:
+      - task: gcp:02-enable-apis
+      - task: gcp:03-set-region-and-zone
+      - task: gcp:04-create-vpc
+      - task: gcp:05-create-subnet
+      - task: gcp:06-create-cluster
+    desc: Create the GCP network, subnet, firewall rules, and cluster in sequence
+
+  gcp:09-clean-up:
+    cmds:
+      - gcloud container clusters delete ${CLUSTER_NAME} --zone ${GCP_ZONE} --quiet
+      - gcloud compute networks subnets delete subnet-1 --region=${GCP_REGION} --quiet
+      - gcloud compute networks delete ${CLUSTER_NAME} --quiet
+    desc: Delete the GCP network, subnet, firewall rules, and cluster in reverse sequence
+
+  gcp:08-connect-to-cluster:
+    cmds:
+      - gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${GCP_ZONE}
+    desc: "Connect to the GKE cluster"
+
+  kind:01-generate-config:
+    cmds:
+      - REPLACE_WITH_ABSOLUTE_PATH=${PWD} envsubst < kind-config.yaml.TEMPLATE > kind-config.yaml
+    desc: "Generate kind config with local absolute paths for PV mounts"
+
+  kind:02-create-cluster:
+    cmds:
+      - kind create cluster --config kind-config.yaml
+    desc: Create a Kubernetes cluster using kind
+
+  kind:03-run-cloud-provider-kind:
+    desc: "Run sigs.k8s.io/cloud-provider-kind@latest to enable load balancer services with KinD"
+    cmds:
+      - sudo cloud-provider-kind
+
+  kind:04-delete-cluster:
+    cmds:
+      - kind delete cluster
+    desc: Delete and existing a kind Kubernetes cluster

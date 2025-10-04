@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: kong
+spec:
+  parentRefs:
+    - name: kong
+  hostnames:
+    - "gateway-example-kong.com"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nginx-clusterip
+          kind: Service
+          port: 80
